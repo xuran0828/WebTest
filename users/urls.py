@@ -15,4 +15,6 @@ urlpatterns = [
     
     # Registration page. 
     url(r'^register/$', views.register, name='register'),
+
+
 ]

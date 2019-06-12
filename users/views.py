@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect,reverse
 from django.http import HttpResponseRedirect
 
 from django.contrib.auth import login, logout, authenticate
@@ -6,9 +6,11 @@ from django.contrib.auth.forms import UserCreationForm
 
 def logout_view(request):
     """Log the user out."""
-    logout(request)
-    return HttpResponseRedirect(reversed('learning_logs:index'))
+    #logout(request)
+    return render(request,'learning_logs/index.html')
 
+
+    print("I am ok")
 def register(request):
     """Register a new user."""
     if request.method != 'POST':

@@ -28,35 +28,42 @@ def new_topic(request):
         form=TopicForm(request.POST)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect(reversed('learning_logs:topics'))
+            return HttpResponseRedirect(reversed('learning_logs:topics.html'))
     context={'form':form}
+    print("i am oklkld")
     return render(request,'learning_logs/new_topic.html',context)
 def new_entry(request,topic_id):
     '''在待定的主题中添加新条目'''
     topic=Topic.objects.get(id=topic_id)
     if request.method!='POST':
-
+        print("i am okla")
+       #这里创建的新表单form有问题，导致加入的entry内容进不去，数据库也不行
         form=EntryForm()
-
     else:
         form=EntryForm(data=request.POST)
         if form.is_valid():
             new_entry=form.save(commit=False)
             new_entry.topic=topic
             new_entry.save()
+            #这里的跳转跳不过去
             return HttpResponseRedirect(reversed('learning_logs:topic',args=[topic_id]))
         context={'topic':topic,'form':form}
         return render(request,'learning_logs/new_entry.html',context)
 def edit_entry(request,entry_id):
     entry=Entry.objects.get(id=entry_id)
     topic=entry.topic
-
     if request.method!='POST':
         form=EntryForm(instance=entry)#创建一根EntryForm表单实例，并使用instance是他可以把当前的文本填充
     else:                              #用户将可以看到并编辑
         form=EntryForm(instance=entry,data=request.POST)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect(reversed('learning_logs:topic',args=[topic.id]))
+            return HttpResponseRedirect(reversed('learning_logs:topics',args=[topic.id]))
+            #return render(request,'learning_logs/topic.html')
     context={'entry':entry,'topic':topic,'form':form}
     return render(request,'learning_logs/edit_entry.html',context)
+def deletes(request):
+    sql_topic=Topic.objects.get(id=12)
+    sql_topic.delete()
+    return render(request,'learning_logs/index.html')
+    #return HttpResponseRedirect(reversed('learning_logs:index'))

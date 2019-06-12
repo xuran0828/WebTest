@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 
 import os
 
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -25,12 +26,12 @@ SECRET_KEY = 's(dq%ugnlyn7t+ba18ay5a1lmxaf5b#)2t(&9wr0oki6sq5gsr'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
 
-INSTALLED_APPS = [
+INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -42,8 +43,13 @@ INSTALLED_APPS = [
     'users',
     'bootstrap3'
 
-]
-
+)
+'''
+AUTHENTICATION_BACKENDS = (
+'account.views.EmailBacken',
+'django.contrib.auth.backends.ModelBackend',
+)
+'''
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -81,8 +87,12 @@ WSGI_APPLICATION = 'WebTest.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'learning_logs',
+        'USER':'root',
+        'PASSWORD':'123456',
+        'HOST':'127.0.0.1',
+        'PORT':'3306',
     }
 }
 
